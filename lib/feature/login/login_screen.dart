@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:santa_brasa/routing/routes.dart';
 import 'login_controller.dart';
-import '../../data/login_repository.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({super.key, required this.controller});
+
+  final LoginController controller;
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -13,13 +15,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final senhaController = TextEditingController();
-  late final LoginController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = LoginController(LoginRepository());
-  }
+  late final controller = widget.controller;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
               builder: (context, loggedIn, _) {
                 if (loggedIn) {
                   WidgetsBinding.instance.addPostFrameCallback((_) {
-                    GoRouter.of(context).go('/home');
+                    GoRouter.of(context).go(Routes.home);
                   });
                 }
                 return const SizedBox.shrink();
